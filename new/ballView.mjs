@@ -1,5 +1,5 @@
 
-import * as THREE from "../../three.js/three.module.js"
+import * as THREE from "./three.js/three.module.js"
 import { newImage,addWork, moreWork } from "./imageLoader.js"
 import {lnQuat} from "./lnQuat.mjs"
 import {Vector} from "./math_config.mjs"
