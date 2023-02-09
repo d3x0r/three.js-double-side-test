@@ -1,0 +1,142 @@
+<style>
+body{
+background:#777	;
+}
+</style>
+<canvas id="canvas"/>
+
+
+<script>
+const canvas = document.getElementById( "canvas");
+const cellwidth = 256;
+const cellheight = 200;
+canvas.width = cellwidth * 15;
+
+canvas.height = cellheight*6;
+canvas.style.width = "100%";
+
+const ctx = canvas.getContext("2d" );
+
+ctx.font = "bolder 225px Arial";
+ctx.textAlign="center";
+ctx.fillStyle="white";
+//ctx.
+//ctx.
+
+// Assuming your canvas element is ctx
+ctx.shadowColor = "white"; // string
+    //Color of the shadow;  RGB, RGBA, HSL, HEX, and other inputs are valid.
+ctx.shadowOffsetX = 0; // integer
+    //Horizontal distance of the shadow, in relation to the text.
+ctx.shadowOffsetY = 0; // integer                                                         4
+    //Vertical distance of the shadow, in relation to the text.
+ctx.shadowBlur =5; // integer
+
+ctx.letterSpacing = 10;
+let letterSpacing = 10;
+
+const spacings_impact = [ 0,0,0,0,0,0,0,0,0,0 // 1-10
+		 , 0,0,0,0,0,0,0,0,0,0 // 11-20
+		 , -20,-6,-10,-20,0,-5,-20,-5,0,-15 // 21-30
+		 , -25,-6,-10,-10,-10,0,-30,-20,0,-5 // 31-40
+		 , -20,-6,-10,-10,0,0,-30,0,0,0 // 41-50
+		 , -30,-10,-10,-10,-10,-10,-30,-10,-10,-12 // 51-60
+		 , -20,-6,-10,-10,0,0,-30,0,0,3 // 61-70
+		 , -10,3,3,-5,3,0,0,0,5,-10 // 71-80
+		 , -20,-20,-20,-20,-20,-20,-20,-20,-20,-15 // 81-90
+];
+
+const spacings = [ 0,0,0,0,0,0,0,0,0,-25 // 1-10
+		 , -45,-25,-25,-25,-25,-25,-25,-25,-25,-5 // 11-20
+		 , -20,-6,-10,-20,-20,-5,-20,-20,-10,-15 // 21-30
+		 , -25,-25,-20,-10,-20,-20,-30,-20,-20,-15 // 31-40
+		 , -43,-6,-10,-10,0,0,-30,-15,-18,-15 // 41-50
+		 , -30,-15,-10,-10,-10,-10,-30,-10,-10,-12 // 51-60
+		 , -20,-15,-15,-10,-20,-20,-20,-15,-15,-25 // 61-70
+		 , -30,-23,-25,-45,-33,-30,-10,-20,-20,-20 // 71-80
+		 , -30,-20,-20,-20,-20,-20,-20,-20,-20,-15 // 81-90
+];
+
+(function(){
+  var _fillText,
+    __slice = [].slice;
+
+  _fillText = CanvasRenderingContext2D.prototype.fillText;
+
+  CanvasRenderingContext2D.prototype.fillText = function() {
+    var args, offset, previousLetter, str, x, y,
+      _this = this;
+
+    str = arguments[0], x = arguments[1], y = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
+    if (this.letterSpacing == null || this.letterSpacing === 0) {
+      return _fillText.apply(this, arguments);
+    }
+	let width = 0;
+	offset = 0;
+
+    [...str].forEach( function(letter,idx) {
+	const space = idx?spacings[Number(str)-1]:0;
+      width += _this.measureText(letter).width + space;
+      return previousLetter = letter;
+    } );
+    
+
+
+    previousLetter = false;
+	[...str].forEach( function(letter,idx) {
+
+	const space = idx?spacings[Number(str)-1]:0;
+//console.log( "Thing:", space, str );
+      _fillText.apply(_this, [letter, x -(width/2)+ offset + space, y].concat(args));
+      offset += _this.measureText(letter).width + letterSpacing;
+      return previousLetter = letter;
+    } );
+
+    return str
+  };
+})();
+
+
+for( let r = 0; r < 6; r++ ) {
+	let clr;
+	switch(r) {
+	case 2:
+	default:
+		clr = ctx.shadowColor = "#777"; // string
+		break;
+        case 0:
+		clr = ctx.shadowColor = "#00e"; // string
+		break;
+
+        case 1:
+		clr = ctx.shadowColor = "#e00"; // string
+		break;
+        case 3:
+		clr = ctx.shadowColor = "#0e0"; // string
+		break;
+        case 4:
+		clr = ctx.shadowColor = "#ee0"; // string
+		break;
+	}
+	for( let c = 0; c < 15; c++ ) {
+        	const num = r*15+c+1;
+		
+		if( 1 ||  r === 2 ) {
+		ctx.shadowColor = clr; // string
+		ctx.shadowBlur =28; // integer
+                	ctx.fillText( ''+num, 187+cellwidth*c, 185+cellheight*r );
+
+		ctx.shadowColor = "#000"; // string
+		ctx.shadowBlur =24; // integer
+                	ctx.fillText( ''+num, 187+cellwidth*c, 185+cellheight*r );
+
+		//ctx.shadowColor = "#000"; // string
+		}else {
+                	//ctx.fillText( ''+num, 187+cellwidth*c, 185+cellheight*r );
+		}
+                
+        }
+}
+
+
+</script>
