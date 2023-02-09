@@ -1,4 +1,4 @@
-import {Vector3} from "../../three.js/three.module.js"
+import {Vector3} from "./three.js/three.module.js"
 import {lnQuat_pooled} from "./lnQuat.mjs"
 
 const vector3Pool = [];
