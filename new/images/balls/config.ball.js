@@ -1,7 +1,7 @@
 
 export const config = {
-	numberImageName: "/images/balls/numbers-HR.png",
-	imagePath: "/images/balls/",
+	numberImageName: "./images/balls/numbers-HR.png",
+	imagePath: "./images/balls/",
 	imageNames : [],
 
 backNames : [ 

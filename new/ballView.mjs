@@ -17,7 +17,7 @@ let wantSpin = false;
 const pathParts = location.pathname.split('/');
 //pathParts[pathParts.length-1] = "assets/numbers.anim.jsox";
 let config = null;
-import( "/images/balls/config.ball.js" ).then( (info)=>{
+import( "./images/balls/config.ball.js" ).then( (info)=>{
 	info = info.default;
 	config = info;
 	
